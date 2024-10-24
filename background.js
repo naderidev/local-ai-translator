@@ -8,11 +8,16 @@ const cache = createCache(256);
 
 async function cachedTranslate(text, settings) {
     text = text.trim();
-    const key = `${settings.backend}\0${settings.language}\0${text}`;
+    const key = JSON.stringify([
+        settings.backend,
+        settings[settings.backend],
+        settings.language,
+        text,
+    ]);
     {
         const cached = cache.get(key);
         if (cached) {
-            console.log("Recalled:", { key, cached });
+            console.log("Cached:", { key, cached });
             return cached;
         }
     }

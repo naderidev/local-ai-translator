@@ -45,6 +45,7 @@ function setupPage1() {
                 backend.key === backendKey
             );
             if (backend.languages) {
+                elLanguageSelect.innerHTML = "";
                 for (
                     const [language, key] of Object.entries(backend.languages)
                 ) {
@@ -161,9 +162,6 @@ function setupPage1() {
         translate(600);
     });
 
-    elToggleLanguageSelect.addEventListener("click", () => {
-    });
-
     background({ action: "backends" }).then((response) => {
         elBackendSelect.innerHTML = "";
         for (const backend of response.backends) {
@@ -186,9 +184,13 @@ function setupPage1() {
         elSourceText.textContent = response.text;
         translate(0, true);
     });
+
+    return {
+        translate,
+    };
 }
 
-function setupPage2() {
+function setupPage2(page1) {
     const elTranslateButton = document.getElementById("translate-btn");
     const elEnableTooltip = document.getElementById("enable-tooltip");
 
@@ -199,6 +201,8 @@ function setupPage2() {
             } else {
                 elPage.classList.add("hidden");
             }
+            // The settings may have changed, so re-translate
+            page1.translate(0);
         });
     });
 
@@ -277,5 +281,7 @@ function setupPage2() {
     });
 }
 
-setupPage1();
-setupPage2();
+setupPage2(setupPage1());
+
+// Notify content script that popup is opened
+content({ action: "popup" });

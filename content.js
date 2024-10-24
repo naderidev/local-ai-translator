@@ -37,7 +37,7 @@ function getTextSelection() {
     };
 }
 
-function setupInPageTranslateTooltip(translateFn) {
+function setupTooltip(translateFn) {
     // Constants
     const fontFamily = "Arial, sans-serif";
 
@@ -356,7 +356,7 @@ function setupInPageTranslateTooltip(translateFn) {
         lastShowButtonTime = Date.now();
     }
 
-    function documentMousedownHandler(e) {
+    function documentMouseDownHandler(e) {
         if (isInsideShadow(e)) {
             return;
         }
@@ -367,34 +367,22 @@ function setupInPageTranslateTooltip(translateFn) {
     }
 
     document.addEventListener("mouseup", documentMouseUpHandler);
-    document.addEventListener("mousedown", documentMousedownHandler);
+    document.addEventListener("mousedown", documentMouseDownHandler);
+
+    function hide() {
+        removeButton();
+        removeTooltip();
+    }
 
     function cleanup() {
         document.removeEventListener("mouseup", documentMouseUpHandler);
-        document.removeEventListener("mousedown", documentMousedownHandler);
+        document.removeEventListener("mousedown", documentMouseDownHandler);
         removeButton();
         removeTooltip();
         container.remove();
     }
-    return cleanup;
-}
 
-function inPageTranslateTooltipToggler(translateFn) {
-    let tooltipCleanupFn = null;
-    const enable = () => {
-        if (tooltipCleanupFn) {
-            return;
-        }
-        tooltipCleanupFn = setupInPageTranslateTooltip(translateFn);
-    };
-    const disable = () => {
-        if (!tooltipCleanupFn) {
-            return;
-        }
-        tooltipCleanupFn();
-        tooltipCleanupFn = null;
-    };
-    return (enabled) => enabled ? enable() : disable();
+    return { hide, cleanup };
 }
 
 function background(request) {
@@ -409,21 +397,39 @@ function background(request) {
     });
 }
 
-const toggleTooltip = inPageTranslateTooltipToggler(async (text) => {
-    const response = await background({
-        action: "translate",
-        text,
-        settings:
-            (await background({ action: "settings" })).settings.translator,
-    });
+const translate = async (text) => {
+    const response = await background({ action: "translate", text });
     if (response.error) {
         throw response.error;
     }
     return response.result;
-});
+};
+
+let tooltip = null;
+
+function enableTooltip() {
+    if (!tooltip) {
+        tooltip = setupTooltip(translate);
+    }
+}
+
+function disableTooltip() {
+    if (tooltip) {
+        tooltip.cleanup();
+        tooltip = null;
+    }
+}
+
+function hideTooltip() {
+    if (tooltip) {
+        tooltip.hide();
+    }
+}
 
 background({ action: "settings" }).then((response) => {
-    toggleTooltip(response.settings.enableTooltip);
+    if (response.settings.enableTooltip) {
+        enableTooltip();
+    }
 });
 
 chrome.runtime.onMessage.addListener(
@@ -434,7 +440,14 @@ chrome.runtime.onMessage.addListener(
                 sendResponse({ text });
                 return true;
             case "tooltip":
-                toggleTooltip(request.enable);
+                if (request.enable) {
+                    enableTooltip();
+                } else {
+                    disableTooltip();
+                }
+                return false;
+            case "popup":
+                hideTooltip();
                 return false;
             default:
                 return false;
