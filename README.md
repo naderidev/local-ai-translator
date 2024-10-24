@@ -2,7 +2,7 @@
 
 A Chrome extension that provides an alternative to the official Google Translate extension.
 
-![Translate Extension](screenshot.png)
+<img width="1040" alt="screenshot" src="https://github.com/user-attachments/assets/fdb7ead8-1663-43c8-ac3e-ecd9a7dc14ca">
 
 ## Features
 
