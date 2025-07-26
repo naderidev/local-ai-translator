@@ -17,13 +17,11 @@ async function cachedTranslate(text, settings) {
     {
         const cached = cache.get(key);
         if (cached) {
-            console.log("Cached:", { key, cached });
             return cached;
         }
     }
     const result = await translator.translate(text, settings);
     cache.set(key, result);
-    console.log("Translated:", { key, result });
     return result;
 }
 
@@ -32,7 +30,6 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log("Received:", { request, sender });
     switch (request.action) {
         case "translate":
             loadSettings().then((settings) => {

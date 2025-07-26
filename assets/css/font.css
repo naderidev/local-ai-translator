@@ -8,3 +8,7 @@
 .font-vazir{
     font-family: "vazirmatn";
 }
+
+.font-vazir::placeholder{
+  font-family: "vazirmatn";
+}
