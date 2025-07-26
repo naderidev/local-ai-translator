@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Translate",
+    "name": "Ollama Translator",
     "version": "1.0",
-    "author": "djosix",
+    "author": "Naderidev",
     "permissions": [
         "storage"
     ],
