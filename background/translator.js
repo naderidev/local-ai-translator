@@ -1,13 +1,7 @@
-import google from "./backends/google.js";
-import openai from "./backends/openai.js";
-import deepl from "./backends/deepl.js";
 import ollama from "./backends/ollama.js";
 
 export function createTranslator() {
     const backends = new Map([
-        ["google", google],
-        ["openai", openai],
-        ["deepl", deepl],
         ["ollama", ollama],
     ]);
 

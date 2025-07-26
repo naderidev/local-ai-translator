@@ -2,7 +2,7 @@ import { deepAssign } from "./utils.js";
 
 const defaultSettings = {
     translator: {
-        backend: "google",
+        backend: "ollama",
         language: "zh-hant", // supported by all backends
     },
     enableTooltip: true,
