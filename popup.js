@@ -33,9 +33,6 @@ function background(request) {
 function setupPage1() {
     const elSettingsButton = document.getElementById("settings-btn");
     const elBackendSelect = document.getElementById("backend-select");
-    const elTargetLanguage = document.getElementById("target-language");
-    const elToggleLanguageSelect = document.getElementById("language-menu");
-    const elLanguageSelect = document.getElementById("language-select");
     const elSourceText = document.getElementById("source-text");
     const elTranslatedText = document.getElementById("translated-text");
 
@@ -45,22 +42,13 @@ function setupPage1() {
                 backend.key === backendKey
             );
             if (backend.languages) {
-                elLanguageSelect.innerHTML = "";
                 for (
                     const [language, key] of Object.entries(backend.languages)
                 ) {
                     const option = document.createElement("option");
                     option.value = key;
                     option.textContent = `${language} "${key}"`;
-                    elLanguageSelect.appendChild(option);
                 }
-            }
-            elTargetLanguage.classList.remove("hidden");
-            elLanguageSelect.classList.add("hidden");
-            if (backend.languages) {
-                elToggleLanguageSelect.classList.remove("hidden");
-            } else {
-                elToggleLanguageSelect.classList.add("hidden");
             }
         });
     }
@@ -84,33 +72,6 @@ function setupPage1() {
                 },
             },
         });
-    });
-
-    elTargetLanguage.addEventListener("input", () => {
-        background({
-            action: "settings",
-            settings: {
-                translator: {
-                    language: elTargetLanguage.value,
-                },
-            },
-        });
-    });
-
-    elToggleLanguageSelect.addEventListener("click", () => {
-        elToggleLanguageSelect.classList.add("hidden");
-        elLanguageSelect.classList.remove("hidden");
-        elTargetLanguage.classList.add("hidden");
-    });
-
-    elLanguageSelect.addEventListener("change", () => {
-        if (elLanguageSelect.value) {
-            elTargetLanguage.value = elLanguageSelect.value;
-            elTargetLanguage.dispatchEvent(new Event("input"));
-        }
-        elToggleLanguageSelect.classList.remove("hidden");
-        elLanguageSelect.classList.add("hidden");
-        elTargetLanguage.classList.remove("hidden");
     });
 
     const translate = function () {
@@ -155,13 +116,6 @@ function setupPage1() {
         translate(50);
     });
 
-    elTargetLanguage.addEventListener("input", () => {
-        if (elTranslatedText.classList.contains("error")) {
-            elTranslatedText.textContent = "";
-        }
-        translate(600);
-    });
-
     background({ action: "backends" }).then((response) => {
         elBackendSelect.innerHTML = "";
         for (const backend of response.backends) {
@@ -172,7 +126,6 @@ function setupPage1() {
         }
         background({ action: "settings" }).then((response) => {
             elBackendSelect.value = response.settings.translator.backend;
-            elTargetLanguage.value = response.settings.translator.language;
             updateBackend(elBackendSelect.value);
         });
     });

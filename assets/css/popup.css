@@ -66,7 +66,7 @@ textarea {
 
 #backend-select {
   flex-grow: 1;
-  max-width: 30%;
+  width: 100%;
 }
 
 #target-language {
@@ -160,7 +160,7 @@ textarea.error {
 }
 
 .square-btn {
-  width: 32px;
+  width: 100%;
   /* 固定寬度為正方形 */
   height: 32px;
   border: 1px solid #ddd;
