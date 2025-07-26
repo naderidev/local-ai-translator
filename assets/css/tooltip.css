@@ -1,0 +1,90 @@
+#tooltip-btn{
+    border-radius: 5px;
+    background-color: rgb(250, 250, 250);
+    position: fixed;
+    color: rgb(136, 136, 136);
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 26px;
+    z-index: 2147483647;
+    box-sizing: border-box;
+    padding: 0px 10px;
+    border: 0px;
+    visibility: visible;
+    font-family: "vazirmatn";
+}
+
+body{
+    font-family:initial;
+    font-size:initial;
+    font-style:initial;
+    font-variant:initial;
+    font-weight:initial;
+    letter-spacing:initial;
+    word-spacing:initial;
+    line-height:initial;
+    color:initial;
+    text-align:initial;
+    text-indent:initial;
+    text-transform:initial;
+    white-space:initial;
+    direction:initial;
+    unicode-bidi:initial;
+    list-style:initial;
+    list-style-image:initial;
+    list-style-position:initial;
+    list-style-type:initial;
+    border-collapse:initial;
+    border-spacing:initial;
+    caption-side:initial;
+    empty-cells:initial;
+    quotes:initial;
+}
+
+#tooltip-body{
+    width: auto;
+    max-width: 132.347px;
+    position: absolute;
+    background-color: white;
+    color: black;
+    padding: 10px 14px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 8px;
+    z-index: 2147483647;
+    transition: opacity 0.5s;
+    font-size: 14px;
+    font-family: vazirmatn, sans-serif;
+    opacity: 1;
+    visibility: visible;
+    left: 292.106px;
+    top: 192.6px;
+    direction: rtl;
+}
+
+#tooltip-body #tooltip-result-text{
+    font-size: 14px;
+    overflow: scroll;
+    max-height: 50vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    direction: rtl;
+    text-align: justify;
+}
+
+#tooltip-body #tooltip-title{
+    font-size: 12px;
+    margin-left: 16px;
+}
+#tooltip-body #tooltip-close{
+    margin-right: auto;
+    cursor: pointer;
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+    border-radius: 10%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: inherit;
+}

@@ -143,7 +143,7 @@ function setupPage1() {
     }();
 
     elSourceText.addEventListener("input", () => {
-        elTranslatedText.textContent = "Typing...";
+        elTranslatedText.textContent = "درحال نوشتن ...";
         translate(800);
     });
 

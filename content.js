@@ -38,8 +38,8 @@ function getTextSelection() {
 }
 
 function setupTooltip(translateFn) {
-    // Constants
-    const fontFamily = "Arial, sans-serif";
+
+    const fontFamily = "vazirmatn";
 
     // States
     let currentButton = null;
@@ -55,73 +55,24 @@ function setupTooltip(translateFn) {
         return container;
     }();
     const shadow = container.attachShadow({ mode: "open" });
-    shadow.appendChild(function () {
-        // Reset all styles that the shadow DOM might inherit to their initial values
-        const shadowCss = [
-            ["font-family", "initial"],
-            ["font-size", "initial"],
-            ["font-style", "initial"],
-            ["font-variant", "initial"],
-            ["font-weight", "initial"],
-            ["letter-spacing", "initial"],
-            ["word-spacing", "initial"],
-            ["line-height", "initial"],
-            ["color", "initial"],
-            ["text-align", "initial"],
-            ["text-indent", "initial"],
-            ["text-transform", "initial"],
-            ["white-space", "initial"],
-            ["direction", "initial"],
-            ["unicode-bidi", "initial"],
-            ["list-style", "initial"],
-            ["list-style-image", "initial"],
-            ["list-style-position", "initial"],
-            ["list-style-type", "initial"],
-            ["border-collapse", "initial"],
-            ["border-spacing", "initial"],
-            ["caption-side", "initial"],
-            ["empty-cells", "initial"],
-            ["quotes", "initial"],
-        ];
-        const style = document.createElement("style");
-        style.innerHTML = ":host{" + shadowCss.map(([key, value]) =>
-            `${key}:${value};`
-        ).join("") + "}";
-        return style;
-    }());
     document.body.appendChild(container);
+    appendStylesFiles();
+
 
     function showButton(placement) {
         removeButton();
 
         const { x, y, upwards } = placement;
-        const width = 26, height = 26;
-        const buttonX = x - width / 2;
-        const buttonY = upwards ? y - height : y;
+        const buttonX = x + 15 ;
+        const buttonY = upwards ? y - 30 : y;
         const defaultBoxShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
 
         currentButton = document.createElement("button");
         currentButton.type = "button";
-        currentButton.innerText = "Tr";
-        currentButton.style.width = `${width}px`;
-        currentButton.style.height = `${height}px`;
-        currentButton.style.borderRadius = "5px";
-        currentButton.style.backgroundColor = "#fafafa";
-        currentButton.style.position = "fixed";
+        currentButton.innerText = "ترجمه";
         currentButton.style.left = `${buttonX}px`;
         currentButton.style.top = `${buttonY}px`;
-        currentButton.style.boxShadow = defaultBoxShadow;
-        currentButton.style.color = "#888";
-        currentButton.style.fontSize = "12px";
-        currentButton.style.cursor = "pointer";
-        currentButton.style.textAlign = "center";
-        currentButton.style.lineHeight = `${height}px`;
-        currentButton.style.zIndex = "2147483647";
-        currentButton.style.boxSizing = "border-box";
-        currentButton.style.fontFamily = fontFamily;
-        currentButton.style.padding = "0";
-        currentButton.style.border = "0";
-        currentButton.style.visibility = "visible";
+        currentButton.id = "tooltip-btn";
 
         currentButton.addEventListener("mouseenter", () => {
             currentButton.style.boxShadow = "0px 3px 6px rgba(0, 0, 0, 0.2)";
@@ -186,6 +137,7 @@ function setupTooltip(translateFn) {
         loader.style.margin = "auto";
         loader.style.padding = "0";
         loader.style.animation = "spin 0.5s linear infinite";
+        loader.style.padding = "5px"
         const styleSheet = document.createElement("style");
         styleSheet.innerText =
             `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`;
@@ -195,24 +147,29 @@ function setupTooltip(translateFn) {
         button.setAttribute("disabled", "disabled");
     }
 
+    function appendStylesFiles(){
+        const stylesDir = "assets/css/";
+
+        const files = [
+            ["tooltip.css", shadow],
+            ["font.css", document.body]
+        ];
+
+        files.forEach((f, e) => {
+            el = document.createElement("link");
+            el.rel = "stylesheet";
+            el.href = chrome.runtime.getURL(stylesDir + f[0]);
+            el.id = f[0];
+            f[1].appendChild(el);
+        });
+        
+    }
+
     function showTooltip(placement, result) {
         removeTooltip();
         const { x, y, upwards } = placement;
         currentTooltip = document.createElement("div");
-        currentTooltip.style.width = "auto";
-        currentTooltip.style.maxWidth = "60vw";
-        currentTooltip.style.position = "absolute";
-        currentTooltip.style.backgroundColor = "white";
-        currentTooltip.style.color = "black";
-        currentTooltip.style.padding = "10px 14px";
-        currentTooltip.style.borderRadius = "6px";
-        currentTooltip.style.boxShadow = "0px 4px 8px rgba(0, 0, 0, 0.4)";
-        currentTooltip.style.zIndex = "2147483647";
-        currentTooltip.style.transition = "opacity 0.5s ease";
-        currentTooltip.style.fontSize = "14px";
-        currentTooltip.style.fontFamily = "Arial, sans-serif";
-        currentTooltip.style.opacity = "0"; // Hide initially
-        currentTooltip.style.visibility = "visible";
+        currentTooltip.id = "tooltip-body";
         currentTooltip.appendChild(function () {
             let div = document.createElement("div");
             div.style.fontSize = "12px";
@@ -223,34 +180,12 @@ function setupTooltip(translateFn) {
             div.style.userSelect = "none";
             div.style.marginBottom = "8px";
             const textDiv = document.createElement("div");
-            textDiv.innerText = "Translate";
-            textDiv.style.fontSize = "12px";
-            textDiv.style.marginRight = "16px";
-            textDiv.style.fontFamily = fontFamily;
+            textDiv.innerText = "ترجمه";
+            textDiv.id = "tooltip-title";
             div.appendChild(textDiv);
             const closeDiv = document.createElement("div");
             closeDiv.innerHTML = "&times;";
-            closeDiv.style.marginLeft = "auto";
-            closeDiv.style.cursor = "pointer";
-            closeDiv.style.fontSize = "12px";
-            closeDiv.style.width = "12px";
-            closeDiv.style.height = "12px";
-            closeDiv.style.borderRadius = "10%";
-            closeDiv.style.justifyContent = "center";
-            closeDiv.style.alignItems = "center";
-            closeDiv.style.textAlign = "center";
-            closeDiv.addEventListener("mouseover", () => {
-                closeDiv.style.backgroundColor = "#dedede";
-            });
-            closeDiv.addEventListener("mouseleave", () => {
-                closeDiv.style.backgroundColor = "inherit";
-            });
-            closeDiv.addEventListener("mousedown", () => {
-                closeDiv.style.backgroundColor = "#c0c0c0";
-            });
-            closeDiv.addEventListener("mouseup", () => {
-                closeDiv.style.backgroundColor = "#dedede";
-            });
+            closeDiv.id = "tooltip-close";
             closeDiv.addEventListener("click", () => {
                 removeTooltip();
             });
@@ -259,10 +194,7 @@ function setupTooltip(translateFn) {
         }());
         currentTooltip.appendChild(function () {
             let div = document.createElement("div");
-            div.style.fontSize = "14px";
-            div.style.fontFamily = fontFamily;
-            div.style.overflow = "scroll";
-            div.style.maxHeight = "50vh";
+            div.id = "tooltip-result-text";
             div.innerText = result;
             return div;
         }());

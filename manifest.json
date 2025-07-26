@@ -27,7 +27,8 @@
             "resources": [
                 "assets/fonts/vazir.ttf",
                 "assets/css/popup.css",
-                "assets/css/font.css"
+                "assets/css/font.css",
+                "assets/css/tooltip.css"
             ],
             "matches": ["<all_urls>"]
         }
