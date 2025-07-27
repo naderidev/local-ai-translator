@@ -1,79 +1,34 @@
-# Translate Extension
+# افزونه مترجم هوش مصنوعی محلی
 
-A Chrome extension that provides an alternative to the official Google Translate extension.
+افزونه‌ای قدرتمند برای ترجمه متون با بهره‌گیری از مدل‌های زبانی به‌صورت کاملاً آفلاین.
 
-<img width="1040" alt="screenshot" src="https://github.com/user-attachments/assets/fdb7ead8-1663-43c8-ac3e-ecd9a7dc14ca">
+![تصویر افزونه](poster.png)
 
-## Features
+## راهنمای نصب
 
-- **In-page Translation**
-  - Select text and click the floating icon to translate directly within the page.
+1. از بخش [Releases](https://github.com/username/repository/releases) آخرین نسخه افزونه را دانلود کنید.
+2. به بخش مدیریت افزونه‌ها در مرورگر خود بروید، حالت توسعه‌دهنده (Developer Mode) را فعال کنید، سپس فایل دانلودشده را به داخل صفحه بکشید و رها کنید تا نصب شود.
 
-- **Pop-up Window Translation**
-  - Click the extension icon to open a translation window:
-    - Automatically translates selected text.
-    - Provides real-time translation as you type.
+## راه‌اندازی و اتصال به سرویس‌ها
 
-- **Stable Styling with Shadow DOM**
-  - Utilizes Shadow DOM to isolate styles, ensuring compatibility with various websites.
-  - Unlike Google Translate, this version remains stable on websites like example.com.
+### اتصال به Ollama
 
-- **Customizable Translation Backends**
-  - Supports multiple translation services: Google, OpenAI, DeepL, and Ollama.
-  - Modular design allows for easy integration and customization of translation backends.
+1. نرم‌افزار [Ollama](https://ollama.ai) را دانلود و نصب کنید.
+2. یک مدل زبانی را از Ollama دانلود و نصب کنید.
+3. به تنظیمات متغیرهای محیطی سیستم (System Environment Variables) بروید و یک متغیر جدید در بخش System Variables ایجاد کنید:
+   - **نام متغیر**: `OLLAMA_ORIGINS`
+   - **مقدار**: `http://localhost,chrome-extension://*`
+4. در تنظیمات افزونه، نام مدل دانلودشده را در بخش **Model** وارد کنید.
+5. در صورت نیاز، پرامپت پیش‌فرض را تغییر دهید و از افزونه استفاده کنید.
 
-## Installation Instructions
+### اتصال به LM Studio
 
-1. Clone or download this repository.
-2. Go to `chrome://extensions` in your Chromium-based browser (e.g., Chrome, Edge, Brave).
-3. Enable “Developer mode.”
-4. Click on “Load unpacked” and select the directory of this repository.
-5. The extension will now appear in your list of installed extensions.
+1. نرم‌افزار [LM Studio](https://lmstudio.ai) را دانلود و نصب کنید.
+2. از بخش **Models** یک مدل زبانی را دانلود و نصب کنید.
+3. به بخش **Developer** بروید، مدل موردنظر را بارگذاری (Load) کنید و وضعیت آن را به **Running** تغییر دهید.
+4. در تنظیمات افزونه، نام مدل بارگذاری‌شده را در بخش **Model** وارد کنید.
+5. پرامپت را در صورت نیاز ویرایش کنید و از افزونه استفاده کنید.
 
-## How to Configure Backends
+## درباره پروژه
 
-### Google
-
-If the built-in key still works, you can skip this section.
-
-1. Retrieve the API key from the [Google Translate](https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb?hl=zh-TW) extension.
-2. Click the extension icon to open the pop-up window.
-3. Go to “Settings,” find the “Google” section, and paste the key.
-
-### OpenAI
-
-1. Get an API key. Refer to [this guide](https://platform.openai.com/docs/quickstart/create-and-export-an-api-key).
-2. Go to “Settings,” find the “OpenAI” section, and paste the API key.
-
-### DeepL
-
-1. Get an API key. Refer to [this page](https://www.deepl.com/en/your-account/keys).
-2. Go to “Settings,” find the “DeepL” section, and paste the API key.
-
-### Ollama
-
-Example steps:
-
-1. **Install Ollama:**
-   - Download and install [Ollama](https://ollama.com/) locally.
-
-2. **Download `gemma2`:**
-   - Run `ollama pull gemma2` to download the `gemma2` model.
-   - If you're working with limited memory, try using `gemma2:2b` instead.
-
-3. **Set Web Origins:**
-   - To allow requests with `Origin: chrome-extension://*`, set the `OLLAMA_ORIGINS` environment variable to `*`.
-   - For more details, refer to this [FAQ](https://github.com/ollama/ollama/blob/0ccc732/docs/faq.md#how-can-i-allow-additional-web-origins-to-access-ollama).
-
-## How to Add a New Translation Backend
-
-1. In `background/backends`, add a new JS script following the structure of the existing scripts.
-2. Import and register your new backend in `background/translator.js`:
-
-    ```js 
-    import example from "./backends/example.js";
-    const backends = new Map([
-        // ...
-        ["example", example],
-    ]);
-    ```
+این پروژه یک فورک از مخزن [Translate](https://github.com/djosix/Translate) است که با بومی‌سازی محیط به زبان فارسی و اعمال بهبودهایی در عملکرد و رابط کاربری، بازنویسی شده است.
