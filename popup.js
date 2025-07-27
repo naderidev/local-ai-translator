@@ -4,12 +4,6 @@ function content(data) {
             const activeTab = tabs[0];
             chrome.tabs.sendMessage(activeTab.id, data, (response) => {
                 if (chrome.runtime.lastError) {
-                    reject(
-                        JSON.stringify({
-                            request: data,
-                            error: chrome.runtime.lastError,
-                        }),
-                    );
                     return;
                 }
                 resolve(response);
@@ -22,7 +16,6 @@ function background(request) {
     return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage(request, (response) => {
             if (chrome.runtime.lastError) {
-                reject(chrome.runtime.lastError);
                 return;
             }
             resolve(response);
@@ -84,7 +77,7 @@ function setupPage1() {
             translateDelayHandle = setTimeout(() => {
                 translateDelayHandle = null;
                 const text = elSourceText.value;
-                elTranslatedText.textContent = "Translating...";
+                elTranslatedText.textContent = "درحال ترجمه...";
                 background({ action: "translate", text })
                     .then((response) => {
                         if (response.error) {
