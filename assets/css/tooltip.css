@@ -13,6 +13,11 @@
     border: 0px;
     visibility: visible;
     font-family: "vazirmatn";
+    box-shadow: 0px;
+}
+
+#tooltip-btn:hover{
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 body{
@@ -49,7 +54,7 @@ body{
     background-color: white;
     color: black;
     padding: 10px 14px;
-    border-radius: 6px;
+    border-radius: 12px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 8px;
     z-index: 2147483647;
     transition: opacity 0.5s;
@@ -64,27 +69,38 @@ body{
 
 #tooltip-body #tooltip-result-text{
     font-size: 14px;
-    overflow: scroll;
     max-height: 50vh;
     overflow-x: hidden;
     overflow-y: auto;
     direction: rtl;
     text-align: justify;
+    padding: 0px 0px 0px 9px;
 }
 
 #tooltip-body #tooltip-title{
     font-size: 12px;
     margin-left: 16px;
+    color: black;
+    opacity: 0.8;
 }
 #tooltip-body #tooltip-close{
     margin-right: auto;
     cursor: pointer;
     font-size: 15px;
     width: 15px;
-    height: 15px;
-    border-radius: 10%;
     justify-content: center;
     align-items: center;
     text-align: center;
     background-color: inherit;
+}
+
+@media (prefers-color-scheme: dark) {
+  #tooltip-body, #tooltip-btn{
+    background-color: #010409;
+    color: white;
+  }
+
+  #tooltip-body #tooltip-title{
+    color: #fff;
+  }
 }

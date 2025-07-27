@@ -39,8 +39,6 @@ function getTextSelection() {
 
 function setupTooltip(translateFn) {
 
-    const fontFamily = "vazirmatn";
-
     // States
     let currentButton = null;
     let currentSelection = null;
@@ -65,7 +63,6 @@ function setupTooltip(translateFn) {
         const { x, y, upwards } = placement;
         const buttonX = x + 15 ;
         const buttonY = upwards ? y - 30 : y;
-        const defaultBoxShadow = "0px 2px 4px rgba(0, 0, 0, 0.2)";
 
         currentButton = document.createElement("button");
         currentButton.type = "button";
@@ -73,16 +70,6 @@ function setupTooltip(translateFn) {
         currentButton.style.left = `${buttonX}px`;
         currentButton.style.top = `${buttonY}px`;
         currentButton.id = "tooltip-btn";
-
-        currentButton.addEventListener("mouseenter", () => {
-            currentButton.style.boxShadow = "0px 3px 6px rgba(0, 0, 0, 0.2)";
-            currentButton.style.backgroundColor = "#fefefe";
-        });
-
-        currentButton.addEventListener("mouseleave", () => {
-            currentButton.style.boxShadow = defaultBoxShadow;
-            currentButton.style.backgroundColor = "#fafafa";
-        });
 
         currentButton.addEventListener("click", (e) => {
             handleButtonClick(currentButton, e);
@@ -127,23 +114,7 @@ function setupTooltip(translateFn) {
     }
 
     function setButtonLoading(button) {
-        const loader = document.createElement("div");
-        loader.style.border = "3px solid #f0f0f0";
-        loader.style.borderRadius = "50%";
-        loader.style.borderTop = "3px solid #3498db";
-        loader.style.width = "16px";
-        loader.style.height = "16px";
-        loader.style.boxSizing = "border-box";
-        loader.style.margin = "auto";
-        loader.style.padding = "0";
-        loader.style.animation = "spin 0.5s linear infinite";
-        loader.style.padding = "5px"
-        const styleSheet = document.createElement("style");
-        styleSheet.innerText =
-            `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`;
-        loader.appendChild(styleSheet);
-        button.innerHTML = "";
-        button.appendChild(loader);
+        button.innerHTML = "درحال ترجمه...";
         button.setAttribute("disabled", "disabled");
     }
 
@@ -173,7 +144,6 @@ function setupTooltip(translateFn) {
         currentTooltip.appendChild(function () {
             let div = document.createElement("div");
             div.style.fontSize = "12px";
-            div.style.fontFamily = fontFamily;
             div.style.color = "#888";
             div.style.display = "flex";
             div.style.justifyContent = "space-between";

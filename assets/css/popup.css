@@ -14,7 +14,6 @@ body {
   padding: 6px;
   border-radius: 12px;
   box-sizing: border-box;
-  overflow: auto;
   font-family: "vazirmatn";
   direction: rtl;
 }
@@ -35,6 +34,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   user-select: none;
+  margin-bottom: 20px;
 }
 
 .text-btn {
@@ -59,7 +59,7 @@ textarea {
   font-size: 14px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: inherit;
   box-sizing: border-box;
   /* Prevents overflow */
 }
@@ -108,7 +108,7 @@ textarea.error {
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: inherit;
   font-size: 14px;
   color: #333;
   box-sizing: border-box;
@@ -121,7 +121,6 @@ textarea.error {
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #fff;
   font-size: 14px;
   color: #333;
   box-sizing: border-box;
@@ -138,7 +137,7 @@ textarea.error {
   font-size: 14px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: inherit;
   box-sizing: border-box;
   width: 100%;
 }
@@ -184,4 +183,14 @@ textarea.error {
 .input-group input[type="text"] {
   flex-grow: 1;
   width: 70%;
+}
+
+@media (prefers-color-scheme: dark) {
+  body{
+    background-color: #010409;
+  }
+
+  *{
+    color: white !important;
+  }
 }
