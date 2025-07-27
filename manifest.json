@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Ollama Translator",
+    "name": "Local AI Translator",
     "version": "1.0",
     "author": "Naderidev",
     "permissions": [
