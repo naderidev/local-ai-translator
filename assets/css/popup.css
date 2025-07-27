@@ -193,4 +193,8 @@ textarea.error {
   *{
     color: white !important;
   }
+
+  select option{
+    background-color:  #010409;  
+  }
 }

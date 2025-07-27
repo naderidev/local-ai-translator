@@ -1,8 +1,10 @@
 import ollama from "./backends/ollama.js";
+import lmstudio from "./backends/lmstudio.js";
 
 export function createTranslator() {
     const backends = new Map([
         ["ollama", ollama],
+        ["lmstudio", lmstudio],
     ]);
 
     async function translate(text, settings) {

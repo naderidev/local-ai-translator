@@ -14,6 +14,7 @@
     visibility: visible;
     font-family: "vazirmatn";
     box-shadow: 0px;
+    direction: rtl;
 }
 
 #tooltip-btn:hover{
